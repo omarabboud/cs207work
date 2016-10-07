@@ -1,3 +1,8 @@
+import itertools
+import reprlib
+import os
+from collections import defaultdict
+
 def lc_reader(file):
 
     value_list =[]
@@ -24,10 +29,8 @@ def lc_reader(file):
         for i in range(len(value_list)):
             lc_dictionary[key_list[i]] = value_list[i]
             
-    return lc_dictionary, lc_new
+    return lc_new, lc_dictionary
 
-import itertools
-import reprlib
 class LightCurve:
     
     def __init__(self, data, metadict):
@@ -46,7 +49,7 @@ class LightCurve:
     
     def __repr__(self):
         class_name = type(self).__name__
-        components = reprlib(list(itertools.islice(self.timeseries,0,10)))
+        components = reprlib.repr(list(itertools.islice(self.timeseries,0,10)))
         components = components[components.find('['):]
         return '{}({})'.format(class_name, components)        
         
@@ -68,8 +71,6 @@ class LightCurve:
     def __len__(self):
         return len(self._time)
 
-import os
-from collections import defaultdict
 class LightCurveDB:
     
     def __init__(self):
